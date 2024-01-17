@@ -1,0 +1,34 @@
+name: signal-go-gadget
+description: send SIGILL to processes running the close syscall
+tracers:
+  events:
+    mapName: events
+    structName: event
+structs:
+  event:
+    fields:
+    - name: timestamp
+      attributes:
+        template: timestamp
+    - name: pid
+      attributes:
+        template: pid
+    - name: mntns_id
+      attributes:
+        template: ns
+    - name: comm
+      attributes:
+        template: comm
+ebpfParams:
+  min_threads:
+    key: min_threads
+    defaultValue: "2"
+    description: skip processes that have less than this amount of threads
+  target_pid:
+    key: target_pid
+    defaultValue: "0"
+    description: select process to trace
+  target_signal:
+    key: target_signal
+    defaultValue: "4"
+    description: 'signal to send to the process (default: 4=SIGILL)'
